@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pauza de Cafea</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #1a120b;
+            color: #e5e5cb;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        .times-font {
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .lato-font {
+            font-family: 'Lato', sans-serif;
+        }
+        .coffee-cup {
+            position: relative;
+            width: 40px;
+            height: 30px;
+            border: 2px solid #d4a373;
+            border-radius: 0 0 8px 8px;
+        }
+        .coffee-cup:before {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 12px;
+            border: 2px solid #d4a373;
+            border-left: none;
+            border-radius: 0 5px 5px 0;
+            right: -10px;
+            top: 6px;
+        }
+        .steam {
+            position: absolute;
+            width: 6px;
+            height: 20px;
+            background: linear-gradient(to top, rgba(255,255,255,0.3), transparent);
+            border-radius: 50%;
+            animation: steamAnimation 4s infinite ease-out;
+        }
+        .steam:nth-child(1) {
+            left: 8px;
+            top: -20px;
+            animation-delay: 0.2s;
+        }
+        .steam:nth-child(2) {
+            left: 18px;
+            top: -25px;
+            animation-delay: 0.6s;
+        }
+        .steam:nth-child(3) {
+            left: 28px;
+            top: -20px;
+            animation-delay: 0.4s;
+        }
+        @keyframes steamAnimation {
+            0% { transform: translateY(0) scale(1); opacity: 0.6; }
+            50% { transform: translateY(-10px) scale(1.1); opacity: 0.3; }
+            100% { transform: translateY(-20px) scale(0.8); opacity: 0; }
+        }
+        .coffee-bean {
+            width: 20px;
+            height: 12px;
+            background: #6f4518;
+            border-radius: 50%;
+            transform: rotate(45deg);
+            position: relative;
+        }
+        .coffee-bean:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            border-radius: 50%;
+        }
+        .arrow-down {
+            width: 30px;
+            height: 30px;
+            border: 2px solid #d4a373;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: rotate(45deg) translateY(0); }
+            40% { transform: rotate(45deg) translateY(-10px); }
+            60% { transform: rotate(45deg) translateY(-5px); }
+        }
+        .section {
+            display: none;
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        .section.active {
+            display: block;
+            opacity: 1;
+        }
+        .nav-btn {
+            background: rgba(109, 76, 65, 0.3);
+            border: 1px solid #d4a373;
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover {
+            background: rgba(212, 163, 115, 0.2);
+            transform: translateY(-3px);
+        }
+        .menu-item {
+            border-bottom: 1px dashed #6f4518;
+            transition: all 0.3s ease;
+        }
+        .menu-item:hover {
+            background: rgba(109, 76, 65, 0.1);
+            transform: translateX(5px);
+        }
+        .wood-texture {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0iIzVmM2YxMCIvPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0iIzVmM2YxMCIgeD0iMjAiIHk9IjAiLz48cmVjdCB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIGZpbGw9IiM2ZjRmMTgiIHg9IjAiIHk9IjIwIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIiBvcGFjaXR5PSIwLjEiLz48L3N2Zz4=');
+        }
+        .fade-in {
+            animation: fadeIn 1.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .slide-in-left {
+            animation: slideInLeft 1s ease-out;
+        }
+        @keyframes slideInLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .slide-in-right {
+            animation: slideInRight 1s ease-out;
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .slide-in-bottom {
+            animation: slideInBottom 1s ease-out;
+        }
+        @keyframes slideInBottom {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Landing Page -->
+    <section id="landing" class="flex flex-col items-center justify-center min-h-screen wood-texture fade-in">
+        <div class="flex items-center mb-2">
+            <div class="relative mr-4">
+                <div class="coffee-cup"></div>
+                <div class="steam"></div>
+                <div class="steam"></div>
+                <div class="steam"></div>
+            </div>
+            <h1 class="times-font text-5xl md:text-7xl text-amber-100">Pauza de Cafea</h1>
+            <div class="relative ml-4">
+                <div class="coffee-cup"></div>
+                <div class="steam"></div>
+                <div class="steam"></div>
+                <div class="steam"></div>
+            </div>
+        </div>
+        
+        <p class="lato-font text-xl md:text-2xl text-amber-100 mb-8 italic">"O pauză caldă în mijlocul unei zile agitate"</p>
+        
+        <div class="text-center mb-12">
+            <p class="text-amber-100 mb-4 flex items-center justify-center">
+                <span class="mr-2">🔔</span> Pentru a accesa site-ul, apasă săgeata de mai jos.
+            </p>
+            <div id="enter-btn" class="arrow-down mx-auto mb-4"></div>
+            <div class="coffee-bean mx-auto"></div>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <nav id="main-nav" class="fixed top-0 left-0 w-full bg-gradient-to-b from-black to-transparent z-50 hidden">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="relative mr-2">
+                    <div class="coffee-cup"></div>
+                    <div class="steam"></div>
+                    <div class="steam"></div>
+                    <div class="steam"></div>
+                </div>
+                <span class="times-font text-xl text-amber-100">Pauza de Cafea</span>
+            </div>
+            <div class="hidden md:flex space-x-4">
+                <button data-target="about" class="nav-btn px-4 py-2 rounded-full text-amber-100">Despre noi</button>
+                <button data-target="menu" class="nav-btn px-4 py-2 rounded-full text-amber-100">Meniu</button>
+                <button data-target="video" class="nav-btn px-4 py-2 rounded-full text-amber-100">Video</button>
+                <button data-target="presentation" class="nav-btn px-4 py-2 rounded-full text-amber-100">Prezentare</button>
+                <button data-target="contact" class="nav-btn px-4 py-2 rounded-full text-amber-100">Contact</button>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden text-amber-100">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="md:hidden bg-black bg-opacity-90 hidden">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-2">
+                <button data-target="about" class="nav-btn px-4 py-2 rounded-full text-amber-100 w-full text-left">Despre noi</button>
+                <button data-target="menu" class="nav-btn px-4 py-2 rounded-full text-amber-100 w-full text-left">Meniu</button>
+                <button data-target="video" class="nav-btn px-4 py-2 rounded-full text-amber-100 w-full text-left">Video</button>
+                <button data-target="presentation" class="nav-btn px-4 py-2 rounded-full text-amber-100 w-full text-left">Prezentare</button>
+                <button data-target="contact" class="nav-btn px-4 py-2 rounded-full text-amber-100 w-full text-left">Contact</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container mx-auto px-4 py-12">
+            <h2 class="times-font text-4xl md:text-5xl text-amber-100 mb-8 text-center slide-in-left">Despre Cafeneaua Noastră</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="slide-in-left">
+                    <div class="bg-black bg-opacity-50 p-6 rounded-lg border border-amber-900">
+                        <h3 class="times-font text-2xl text-amber-100 mb-4">Povestea noastră</h3>
+                        <p class="lato-font text-amber-100 mb-4">
+                            În inima Liceului "Emil Racoviță" din Galați, am creat un spațiu special unde elevii pot găsi o pauză autentică de la viața zilnică. Cafeneaua noastră funcționează dintr-o rulotă plină de farmec, oferind o experiență cozy și rafinată.
+                        </p>
+                        <p class="lato-font text-amber-100 mb-4">
+                            Am pornit cu un buget modest de 25.000 lei și mult entuziasm, transformând o simplă idee într-un loc magic unde aroma cafelei se îmbină cu creativitatea și energia tinerilor.
+                        </p>
+                        <p class="lato-font text-amber-100">
+                            Fiecare ceașcă de cafea pe care o servim este preparată cu pasiune și atenție la detalii, exact cum și-o dorim în pauzele noastre.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="slide-in-right">
+                    <div class="relative overflow-hidden rounded-lg border-2 border-amber-900 h-64 md:h-96">
+                        <div class="absolute inset-0 bg-gradient-to-r from-black to-transparent opacity-50"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center p-4">
+                                <i class="fas fa-coffee text-6xl text-amber-100 mb-4"></i>
+                                <h3 class="times-font text-2xl text-amber-100">Rulota noastră</h3>
+                                <p class="lato-font text-amber-100">Un colț de rai în mijlocul liceului</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 slide-in-bottom">
+                <button data-target="menu" class="nav-btn px-6 py-3 rounded-full text-amber-100 text-lg">
+                    Descoperă meniul nostru <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="section">
+        <div class="container mx-auto px-4 py-12">
+            <h2 class="times-font text-4xl md:text-5xl text-amber-100 mb-8 text-center slide-in-left">Meniu</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Coffee -->
+                <div class="slide-in-left">
+                    <div class="bg-black bg-opacity-50 p-6 rounded-lg border border-amber-900 h-full">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-coffee text-2xl text-amber-100 mr-3"></i>
+                            <h3 class="times-font text-2xl text-amber-100">Cafea</h3>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="menu-item p-3">
+                                <div class="flex justify-between">
+                                    <span class="lato-font text-amber-100">Espresso</span>
+                                    <span class="lato-font text-amber-100">8 lei</span>
+                                </div>
+                                <p class="lato-font text-amber-100 text-sm italic">O singură aromă intensă</p>
+                            </div>
+                            
+                            <div class="menu-item p-3">
+                                <div class="flex justify-between">
+                                    <span class="lato-font text-amber-100">Americano</span>
+                                    <span class="lato-font text-amber-100">10 lei</span>
+                                </div>
+                                <p class="lato-font text-amber-100 text-sm italic">Espresso diluat cu apă fierbinte</p>
+                            </div>
+                            
+                            <div class="menu-item p-3">
+                                <div class="flex justify-between">
+                                    <span class="lato-font text-amber-100">Cappuccino</span>
+                                    <span class="lato-font text-amber-100">12 lei</span>
+                                </div>
+                                <p class="lato-font text-amber-100 text-sm italic">Espresso, lapte și spumă de lapte</p>
+                            </div>
+                            
+                            <div class="menu-item p-3">
+                                <div class="flex justify-between">
+                                    <span class="lato-font text-amber-100">Latte</span>
+                                    <span class="lato-font text-amber-100">14 lei</span>
+                                </div>
+                                <p class="lato-font text-amber-100 text-sm italic">Mai mult lapte, mai puțină cafea</p>
+                            </div>
+                            
+                            <div class="menu-item p-3">
+                                <div class="flex justify-between">
+                                    <span class="lato-font text-amber-100">Flat White</span>
+                                    <span class="lato-font text-amber-100">14 lei</span>
+                                </div>
+                                <p class="lato-font text-amber-100 text-sm italic">Dublu espresso cu lapte cremos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Snacks -->
+                <div class="slide-in-bottom">
+                    <div class="bg-black bg-opacity-50 p-6 rounded-lg border border-amber-900 h-full">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-cookie-bite text-2xl text-amber-100 mr-3"></i>
+                            <h3 class="times-font text-2xl text-amber-100">Gustări</h3>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="menu-item p-3">
+                                <div class="flex justify-between">
+                                    <span class="lato-font text-amber-100">Croissant</span>
+                                    <span class="lato-font text-amber-100">7 lei</span>
+                                </div>
+                                <p class="lato-font text-amber-100 text-sm italic">Proaspăt și crocant</p>
+                            </div>
+                            
+                            <div class="menu-item p-3">
+                                <div class="flex justify-between">
+                                    <span class="lato-font text-amber-100">Sandviș</span>
+                                    <span class="lato-font text-amber-100">10 lei</span>
+                                </div>
+                                <p class="lato-font text-amber-100 text-sm italic">Pâine proaspătă cu brânză și legume</p>
+                            </div>
+                            
+                            <div class="menu-item p-3">
+                                <div class="flex justify-between">
+                                    <span class="lato-font text-amber-100">Plăcintă</span>
+                                    <span class="lato-font text-amber-100">8 lei</span>
+                                </div>
+                                <p class="lato-font text-amber-100 text-sm italic">Cu mere sau brânză</p>
+                            </div>
+                            
+                            <div class="menu-item p-3">
+                                <div class="flex justify-between">
+                                    <span class="lato-font text-amber-100">Muffin</span>
+                                    <span class="lato-font text-amber-100">6 lei</span>
+                                </div>
+                                <p class="lato-font text-amber-100 text-sm italic">Ciocolată sau vanilie</p>
+                            </div>
+                            
+                            <div class="menu-item p-3">
+                                <div class="flex justify-between">
+                                    <span class="lato-font text-amber-100">Fructe proaspete</span>
+                                    <span class="lato-font text-amber-100">5 lei</span>
+                                </div>
+                                <p class="lato-font text-amber-100 text-sm italic">Sezonale</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Student Offers -->
+                <div class="slide-in-right">
+                    <div class="bg-black bg-opacity-50 p-6 rounded-lg border border-amber-900 h-full">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-graduation-cap text-2xl text-amber-100 mr-3"></i>
+                            <h3 class="times-font text-2xl text-amber-100">Oferte Elevi</h3>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="menu-item p-3">
+                                <div class="flex justify-between">
+                                    <span class="lato-font text-amber-100">Pachet Mic de Dimineață</span>
+                                    <span class="lato-font text-amber-100">15 lei</span>
+                                </div>
+                                <p class="lato-font text-amber-100 text-sm italic">Cafea + croissant</p>
+                            </div>
+                            
+                            <div class="menu-item p-3">
+                                <div class="flex justify-between">
+                                    <span class="lato-font text-amber-100">Pachet Mare de Dimineață</span>
+                                    <span class="lato-font text-amber-100">20 lei</span>
+                                </div>
+                                <p class="lato-font text-amber-100 text-sm italic">Cafea + sandviș + suc</p>
+                            </div>
+                            
+                            <div class="menu-item p-3">
+                                <div class="flex justify-between">
+                                    <span class="lato-font text-amber-100">Oferta Pauză</span>
+                                    <span class="lato-font text-amber-100">18 lei</span>
+                                </div>
+                                <p class="lato-font text-amber-100 text-sm italic">Cappuccino + plăcintă</p>
+                            </div>
+                            
+                            <div class="menu-item p-3">
+                                <div class="flex justify-between">
+                                    <span class="lato-font text-amber-100">Card de Fidelitate</span>
+                                    <span class="lato-font text-amber-100">-10%</span>
+                                </div>
+                                <p class="lato-font text-amber-100 text-sm italic">La a 10-a cafea, primești una gratis</p>
+                            </div>
+                            
+                            <div class="menu-item p-3">
+                                <div class="flex justify-between">
+                                    <span class="lato-font text-amber-100">Grupă 4+</span>
+                                    <span class="lato-font text-amber-100">-15%</span>
+                                </div>
+                                <p class="lato-font text-amber-100 text-sm italic">Reducere pentru grupuri de elevi</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 slide-in-bottom">
+                <button data-target="video" class="nav-btn px-6 py-3 rounded-full text-amber-100 text-lg">
+                    Următorul: Video <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section id="video" class="section">
+        <div class="container mx-auto px-4 py-12">
+            <h2 class="times-font text-4xl md:text-5xl text-amber-100 mb-8 text-center slide-in-left">Video Prezentare</h2>
+            
+            <div class="max-w-4xl mx-auto slide-in-bottom">
+                <div class="bg-black bg-opacity-50 p-8 rounded-lg border border-amber-900">
+                    <div class="aspect-w-16 aspect-h-9 relative">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-play-circle text-6xl text-amber-100 opacity-70"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-r from-black to-transparent opacity-30"></div>
+                        <img src="https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80" 
+                             alt="Cafenea video placeholder" 
+                             class="w-full h-full object-cover rounded">
+                    </div>
+                    
+                    <div class="mt-6 text-center">
+                        <p class="lato-font text-amber-100 mb-4">
+                            Descoperă atmosfera autentică a cafenelei noastre în acest scurt film prezentativ.
+                        </p>
+                        <button class="nav-btn px-6 py-3 rounded-full text-amber-100 text-lg">
+                            <i class="fas fa-play mr-2"></i> Redă Video
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 slide-in-bottom">
+                <button data-target="presentation" class="nav-btn px-6 py-3 rounded-full text-amber-100 text-lg">
+                    Următorul: Prezentare <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Presentation Section -->
+    <section id="presentation" class="section">
+        <div class="container mx-auto px-4 py-12">
+            <h2 class="times-font text-4xl md:text-5xl text-amber-100 mb-8 text-center slide-in-left">Prezentare</h2>
+            
+            <div class="max-w-4xl mx-auto slide-in-bottom">
+                <div class="bg-black bg-opacity-50 p-8 rounded-lg border border-amber-900">
+                    <div class="aspect-w-16 aspect-h-9 relative">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-file-powerpoint text-6xl text-amber-100 opacity-70"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-r from-black to-transparent opacity-30"></div>
+                        <img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80" 
+                             alt="Prezentare PowerPoint placeholder" 
+                             class="w-full h-full object-cover rounded">
+                    </div>
+                    
+                    <div class="mt-6 text-center">
+                        <h3 class="times-font text-2xl text-amber-100 mb-2">Pauza de Cafea - Proiectul Nostru</h3>
+                        <p class="lato-font text-amber-100 mb-4">
+                            Descarcă prezentarea noastră PowerPoint pentru a afla mai multe despre povestea cafenelei, echipa noastră și planurile de viitor.
+                        </p>
+                        <button class="nav-btn px-6 py-3 rounded-full text-amber-100 text-lg">
+                            <i class="fas fa-download mr-2"></i> Descarcă Prezentarea
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 slide-in-bottom">
+                <button data-target="contact" class="nav-btn px-6 py-3 rounded-full text-amber-100 text-lg">
+                    Următorul: Contact <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container mx-auto px-4 py-12">
+            <h2 class="times-font text-4xl md:text-5xl text-amber-100 mb-8 text-center slide-in-left">Contact</h2>
+            
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                <div class="slide-in-left">
+                    <div class="bg-black bg-opacity-50 p-6 rounded-lg border border-amber-900 h-full">
+                        <h3 class="times-font text-2xl text-amber-100 mb-4">Informații de contact</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-amber-100 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="lato-font text-amber-100 font-semibold">Adresă</h4>
+                                    <p class="lato-font text-amber-100">Liceul "Emil Racoviță" Galați<br>Intrarea principală, lângă rulotă</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-clock text-amber-100 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="lato-font text-amber-100 font-semibold">Program</h4>
+                                    <p class="lato-font text-amber-100">
+                                        Luni-Vineri: 7:30 - 14:30<br>
+                                        Sâmbătă: 8:00 - 12:00<br>
+                                        Duminică: Închis
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-envelope text-amber-100 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="lato-font text-amber-100 font-semibold">Email</h4>
+                                    <p class="lato-font text-amber-100">contact@pauzadecafea.ro</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-phone-alt text-amber-100 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="lato-font text-amber-100 font-semibold">Telefon</h4>
+                                    <p class="lato-font text-amber-100">+40 736 123 456</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slide-in-right">
+                    <div class="bg-black bg-opacity-50 p-6 rounded-lg border border-amber-900 h-full">
+                        <h3 class="times-font text-2xl text-amber-100 mb-4">Harta Liceului</h3>
+                        
+                        <div class="relative overflow-hidden rounded-lg border border-amber-900 aspect-w-1 aspect-h-1">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i class="fas fa-map-marked-alt text-5xl text-amber-100 opacity-50"></i>
+                            </div>
+                            <img src="https://maps.googleapis.com/maps/api/staticmap?center=Liceul+Emil+Racovita,Galati&zoom=16&size=600x400&maptype=roadmap&markers=color:red%7CLiceul+Emil+Racovita,Galati&key=YOUR_API_KEY" 
+                                 alt="Harta liceului" 
+                                 class="w-full h-full object-cover opacity-70">
+                        </div>
+                        
+                        <div class="mt-4">
+                            <p class="lato-font text-amber-100 text-sm italic">
+                                * Cafeneaua noastră este situată în incinta liceului, lângă intrarea principală.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 slide-in-bottom">
+                <button data-target="about" class="nav-btn px-6 py-3 rounded-full text-amber-100 text-lg">
+                    Înapoi la început <i class="fas fa-arrow-up ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black bg-opacity-80 py-8 border-t border-amber-900">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <div class="relative mr-3">
+                        <div class="coffee-cup"></div>
+                        <div class="steam"></div>
+                        <div class="steam"></div>
+                        <div class="steam"></div>
+                    </div>
+                    <span class="times-font text-xl text-amber-100">Pauza de Cafea</span>
+                </div>
+                
+                <div class="flex space-x-6 mb-4 md:mb-0">
+                    <a href="#" class="text-amber-100 hover:text-amber-300 text-xl">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="#" class="text-amber-100 hover:text-amber-300 text-xl">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-amber-100 hover:text-amber-300 text-xl">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+                
+                <div class="text-center md:text-right">
+                    <p class="lato-font text-amber-100 text-sm">
+                        &copy; 2023 Pauza de Cafea<br>
+                        Toate drepturile rezervate
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Enter button functionality
+            const enterBtn = document.getElementById('enter-btn');
+            const landingSection = document.getElementById('landing');
+            const mainNav = document.getElementById('main-nav');
+            
+            enterBtn.addEventListener('click', function() {
+                // Hide landing page
+                landingSection.style.opacity = '0';
+                landingSection.style.pointerEvents = 'none';
+                
+                // Show navigation
+                mainNav.classList.remove('hidden');
+                
+                // Show first section
+                setTimeout(() => {
+                    landingSection.style.display = 'none';
+                    showSection('about');
+                }, 1000);
+            });
+            
+            // Navigation functionality
+            const navButtons = document.querySelectorAll('[data-target]');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetSection = this.getAttribute('data-target');
+                    showSection(targetSection);
+                    
+                    // Close mobile menu if open
+                    if (mobileMenu.classList.contains('hidden') === false) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+            
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Function to show a section
+            function showSection(sectionId) {
+                // Hide all sections
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show the selected section
+                const targetSection = document.getElementById(sectionId);
+                targetSection.classList.add('active');
+                
+                // Scroll to top of the section
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+            
+            // Add animation classes when sections become visible
+            const observerOptions = {
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const animatedElements = entry.target.querySelectorAll('.slide-in-left, .slide-in-right, .slide-in-bottom');
+                        
+                        animatedElements.forEach(element => {
+                            element.style.animationPlayState = 'running';
+                        });
+                        
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.section').forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</html>
